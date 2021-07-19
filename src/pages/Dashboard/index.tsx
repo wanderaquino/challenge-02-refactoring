@@ -1,5 +1,5 @@
 import {useState } from 'react';
-import Header from '../../components/Header';
+import {Header} from '../../components/Header';
 import api from '../../services/api';
 import ModalAddFood from '../../components/ModalAddFood';
 import ModalEditFood from '../../components/ModalEditFood';
@@ -41,7 +41,7 @@ export function Dashboard () {
       setFoods(response.data);
     }
     )
-  })
+  }, [])
 
   // async function componentDidMount() {
   //   const response = await api.get('/foods');
