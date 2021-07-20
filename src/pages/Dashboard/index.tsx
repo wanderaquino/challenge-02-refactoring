@@ -32,14 +32,12 @@ export function Dashboard () {
   }, [])
  
  const handleAddFood = async (food: FoodProps) => {
-    console.log(food);
     const localFoods = foods;
     try {
       const response = await api.post('/foods', {
         ...food,
         available: true,
       });
-      console.log(response.data);
       setFoods([...localFoods, response.data]);
     } catch (err) {
       console.log(err);
