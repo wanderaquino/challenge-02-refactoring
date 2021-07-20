@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FiEdit3, FiTrash } from 'react-icons/fi';
+import api from '../../services/api';
 
 import { Container } from './styles';
-import api from '../../services/api';
 
 interface FoodInterface {
   id: number,
@@ -20,46 +20,20 @@ interface FoodProps{
 }
 
 export function Food ({food, handleEditFood, handleDelete} : FoodProps) {
-  const [foodAvailable, setFoodAvailable] = useState(food.available);
+  const [isAvailable, setIsAvailable] = useState(food.available)
 
-  function toggleAvailable() {
+  async function toggleAvailable() {
+    await api.put(`/foods/${food.id}`, {
+      ...food,
+      available: !isAvailable,
+    });
 
+    setIsAvailable(!isAvailable)
   }
 
   function setEditingFood() {
-
+    handleEditFood(food);
   }
-  // constructor(props) {
-  //   super(props);
-
-  //   const { available } = this.props.food;
-  //   this.state = {
-  //     isAvailable: available
-  //   };
-  // }
-
-  // toggleAvailable = async () => {
-  //   const { food } = this.props;
-  //   const { isAvailable } = this.state;
-
-  //   await api.put(`/foods/${food.id}`, {
-  //     ...food,
-  //     available: !isAvailable,
-  //   });
-
-  //   this.setState({ isAvailable: !isAvailable });
-  // }
-
-  // setEditingFood = () => {
-  //   const { food, handleEditFood } = this.props;
-
-  //   handleEditFood(food);
-  // }
-
-  // render() {
-  //   const { isAvailable } = this.state;
-  //   const { food, handleDelete } = this.props;
-
     return (
       <Container available={food.available}>
         <header>
@@ -100,7 +74,7 @@ export function Food ({food, handleEditFood, handleDelete} : FoodProps) {
               <input
                 id={`available-switch-${food.id}`}
                 type="checkbox"
-                checked={food.available}
+                checked={isAvailable}
                 onChange={toggleAvailable}
                 data-testid={`change-status-food-${food.id}`}
               />
