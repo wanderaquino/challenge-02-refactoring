@@ -8,10 +8,9 @@ interface FoodInterface {
   id: number,
   name: string,
   image: string,
-  type: string,
   description: string,
   price: number,
-  isAvailable: boolean
+  available: boolean
 }
 
 interface FoodProps{
@@ -21,7 +20,7 @@ interface FoodProps{
 }
 
 export function Food ({food, handleEditFood, handleDelete} : FoodProps) {
-  const [foodAvailable, setFoodAvailable] = useState(food.isAvailable);
+  const [foodAvailable, setFoodAvailable] = useState(food.available);
 
   function toggleAvailable() {
 
@@ -62,7 +61,7 @@ export function Food ({food, handleEditFood, handleDelete} : FoodProps) {
   //   const { food, handleDelete } = this.props;
 
     return (
-      <Container available={food.isAvailable}>
+      <Container available={food.available}>
         <header>
           <img src={food.image} alt={food.name} />
         </header>
@@ -95,13 +94,13 @@ export function Food ({food, handleEditFood, handleDelete} : FoodProps) {
           </div>
 
           <div className="availability-container">
-            <p>{food.isAvailable ? 'Disponível' : 'Indisponível'}</p>
+            <p>{food.available ? 'Disponível' : 'Indisponível'}</p>
 
             <label htmlFor={`available-switch-${food.id}`} className="switch">
               <input
                 id={`available-switch-${food.id}`}
                 type="checkbox"
-                checked={food.isAvailable}
+                checked={food.available}
                 onChange={toggleAvailable}
                 data-testid={`change-status-food-${food.id}`}
               />
